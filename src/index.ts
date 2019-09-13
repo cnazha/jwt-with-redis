@@ -37,6 +37,13 @@ class JWTR {
         return prefix + token;
     }
 
+
+    // Add token to Redis
+    private async set setToken(token: string) {
+        this.redis.set(token, JSON.stringify(payload));
+    }
+
+
 }
 
 export default JWTR;
