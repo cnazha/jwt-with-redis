@@ -1,5 +1,5 @@
 import * as jwt from "jsonwebtoken";
-import * as Redis from "ioredis"
+import Redis from "ioredis"
 import {IConfig} from "./interface";
 
 
@@ -14,11 +14,18 @@ class JWTR {
         this.redis = new Redis(redisConfig);
     }
 
-    public sign(payload, jwtConfig?: any):Promise<string>  {
+    // JWT sign method
+    public sign(payload, jwtConfig?: any): Promise<string> {
         return this.jwt.sign(payload, this.config.secret, {expiresIn: '1y', ...jwtConfig});
     }
 
-    public verify(token: string): Promise<string>{
+    // JWT decode method
+    public decode(token: string): Promise<string> {
+        return this.jwt.decode(token, this.config.secret);
+    }
+
+    // JWT verify method
+    public verify(token: string): Promise<string> {
         return this.jwt.verify(token, this.config.secret);
     }
 
