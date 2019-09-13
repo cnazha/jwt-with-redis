@@ -43,7 +43,8 @@ class JWTR {
     private async setToken(token: string, payload, config) {
         const { expiresIn } = config;
         const key = this.generateKey(token);
-        this.redis.set(key, JSON.stringify(payload), "EX", parseInt(expiresIn));
+        const data = JSON.stringify(payload);
+        this.redis.set(key, data, "EX", parseInt(expiresIn));
     }
 
     // Set token then return it
