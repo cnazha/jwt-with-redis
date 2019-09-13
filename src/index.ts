@@ -14,11 +14,11 @@ class JWTR {
         this.redis = new Redis(redisConfig);
     }
 
-    public generateToken(payload, jwtConfig?: any):Promise<string>  {
+    public sign(payload, jwtConfig?: any):Promise<string>  {
         return this.jwt.sign(payload, this.config.secret, {expiresIn: '1y', ...jwtConfig});
     }
 
-    public verifyToken(token: string): Promise<string>{
+    public verify(token: string): Promise<string>{
         return this.jwt.verify(token, this.config.secret);
     }
 
