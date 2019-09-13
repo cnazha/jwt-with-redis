@@ -8,17 +8,19 @@ class JWTR {
     private readonly jwt: any;
     private readonly redis;
     private readonly SECRET: string;
+    private readonly defaultJWTConfig: any;
 
     constructor(config: IConfig, redisConfig?: any) {
         this.config = config;
         this.SECRET = config.secret;
         this.jwt = jwt;
         this.redis = new Redis(redisConfig);
+        this.defaultJWTConfig = {expiresIn: '20'}
     }
 
     // JWT sign method
     public sign(payload, jwtConfig?: any): Promise<string> {
-        return this.jwt.sign(payload, this.SECRET, {expiresIn: '1y', ...jwtConfig});
+        return this.jwt.sign(payload, this.SECRET, {...this.defaultJWTConfig, ...jwtConfig});
     }
 
     // JWT decode method
@@ -38,15 +40,16 @@ class JWTR {
     }
 
     // Set token in Redis with prefix
-    private async setToken(token: string, payload) {
+    private async setToken(token: string, payload, config) {
+        const { expiresIn } = config;
         const key = this.generateKey(token);
-        this.redis.set(key, JSON.stringify(payload));
+        this.redis.set(key, JSON.stringify(payload), "EX", parseInt(expiresIn));
     }
 
     // Set token then return it
     public async addToken(payload, jwtConfig?: any) {
         const token = await this.sign(payload, jwtConfig);
-        this.setToken(token, payload);
+        this.setToken(token, payload, jwtConfig = this.defaultJWTConfig);
         return token;
     }
 
