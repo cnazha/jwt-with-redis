@@ -1,0 +1,12 @@
+{
+  "name": "jwt-with-redis",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/cnazha/jwt-with-redis.git",
+  "author": "Christian Nazha <Christian@Nazha.dev>",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.3"
+  }
+}
