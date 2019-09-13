@@ -1,47 +1,26 @@
-import * as jwt from "jsonwebtoken";
 import Redis from "ioredis"
 import {IConfig} from "./interface";
+import JWT from "./JWT";
 
 
-class JWTR {
-    private readonly config: IConfig;
-    private readonly jwt: any;
+class JWTR extends JWT {
+
     private readonly redis;
-    private readonly SECRET: string;
-    private readonly defaultJWTConfig: any;
 
     constructor(config: IConfig, redisConfig?: any) {
-        this.config = config;
-        this.SECRET = config.secret;
-        this.jwt = jwt;
+        super(config);
         this.redis = new Redis(redisConfig);
-        this.defaultJWTConfig = {expiresIn: '20'}
-    }
-
-    // JWT sign method
-    public sign(payload, jwtConfig?: any): Promise<string> {
-        return this.jwt.sign(payload, this.SECRET, {...this.defaultJWTConfig, ...jwtConfig});
-    }
-
-    // JWT decode method
-    public decode(token: string): Promise<string> {
-        return this.jwt.decode(token, this.SECRET);
-    }
-
-    // JWT verify method
-    public verify(token: string): Promise<string> {
-        return this.jwt.verify(token, this.SECRET);
     }
 
     // Generate redis key
-    private generateKey (token){
+    private generateKey(token) {
         const {prefix = ''} = this.config;
-        return  prefix + token;
+        return prefix + token;
     }
 
     // Set token in Redis with prefix
     private async setToken(token: string, payload, config) {
-        const { expiresIn } = config;
+        const {expiresIn} = config;
         const key = this.generateKey(token);
         const data = JSON.stringify(payload);
         this.redis.set(key, data, "EX", parseInt(expiresIn));
