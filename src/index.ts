@@ -39,6 +39,7 @@ class JWTR extends JWT {
         return this.redis.get(key);
     }
 
+    // Deletes token key from redis
     public async revokeToken(token) {
         const key = this.generateKey(token);
         return this.redis.del(key);
