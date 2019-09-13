@@ -29,10 +29,15 @@ class JWTR {
         return this.jwt.verify(token, this.config.secret);
     }
 
+    // Generate redis key
+    private generateKey (token){
+        const {prefix = ''} = this.config;
+        return  prefix + token;
+    }
+
     // Set token in Redis with prefix
     private async setToken(token: string, payload) {
-        const {prefix = ''} = this.config;
-        const key = prefix + token;
+        const key = this.generateKey(token);
         this.redis.set(key, JSON.stringify(payload));
     }
 
@@ -45,8 +50,7 @@ class JWTR {
 
     // Retrieves payload for token
     public async getToken(token) {
-        const {prefix = ''} = this.config;
-        const key = prefix + token;
+        const key = this.generateKey(token);
         return this.redis.get(key);
     }
 
