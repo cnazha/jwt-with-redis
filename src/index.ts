@@ -7,26 +7,28 @@ class JWTR {
     private readonly config: IConfig;
     private readonly jwt: any;
     private readonly redis;
+    private readonly SECRET: string;
 
     constructor(config: IConfig, redisConfig?: any) {
         this.config = config;
+        this.SECRET = config.secret;
         this.jwt = jwt;
         this.redis = new Redis(redisConfig);
     }
 
     // JWT sign method
     public sign(payload, jwtConfig?: any): Promise<string> {
-        return this.jwt.sign(payload, this.config.secret, {expiresIn: '1y', ...jwtConfig});
+        return this.jwt.sign(payload, this.SECRET, {expiresIn: '1y', ...jwtConfig});
     }
 
     // JWT decode method
     public decode(token: string): Promise<string> {
-        return this.jwt.decode(token, this.config.secret);
+        return this.jwt.decode(token, this.SECRET);
     }
 
     // JWT verify method
     public verify(token: string): Promise<string> {
-        return this.jwt.verify(token, this.config.secret);
+        return this.jwt.verify(token, this.SECRET);
     }
 
     // Generate redis key
