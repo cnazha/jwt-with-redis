@@ -16,6 +16,10 @@ class JWTR {
         return this.jwt.sign(payload, this.config.secret, {expiresIn: '1y', ...jwtConfig});
     }
 
+    public verifyToken(token: string): Promise<string>{
+        return this.jwt.verify(token, this.config.secret);
+    }
+
 }
 
 
