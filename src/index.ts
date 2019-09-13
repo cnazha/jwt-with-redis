@@ -3,7 +3,7 @@ import {IConfig} from "./interface";
 import JWT from "./JWT";
 
 
-class JWTR extends JWT {
+class JWR extends JWT {
 
     private readonly redis;
 
@@ -46,4 +46,4 @@ class JWTR extends JWT {
     }
 }
 
-export default JWTR;
+export default JWR;
