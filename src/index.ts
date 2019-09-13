@@ -29,18 +29,18 @@ class JWTR {
         return this.jwt.verify(token, this.config.secret);
     }
 
-
-    // Generate token with prefix
-    private async generateToken(payload, jwtConfig?: any) {
+    // Set token in Redis with prefix
+    private async set setToken(token: string):void {
         const {prefix = ''} = this.config;
-        const token = await this.sign(payload, jwtConfig);
-        return prefix + token;
+        const key = prefix + token;
+        this.redis.set(key, JSON.stringify(payload));
     }
 
-
-    // Add token to Redis
-    private async set setToken(token: string) {
-        this.redis.set(token, JSON.stringify(payload));
+    // Set token then return it
+    public async addToken(payload, jwtConfig?: any) {
+        const token = await this.sign(payload, jwtConfig);
+        this.setToken(token);
+        return token;
     }
 
 
