@@ -30,7 +30,7 @@ class JWTR {
     }
 
     // Set token in Redis with prefix
-    private async set setToken(token: string):void {
+    private async setToken(token: string, payload) {
         const {prefix = ''} = this.config;
         const key = prefix + token;
         this.redis.set(key, JSON.stringify(payload));
@@ -39,10 +39,9 @@ class JWTR {
     // Set token then return it
     public async addToken(payload, jwtConfig?: any) {
         const token = await this.sign(payload, jwtConfig);
-        this.setToken(token);
+        this.setToken(token, payload);
         return token;
     }
-
 
 }
 
