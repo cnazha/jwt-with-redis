@@ -30,6 +30,12 @@ class JWTR {
     }
 
 
+    // Generate token with prefix
+    private async generateToken(payload, jwtConfig?: any) {
+        const {prefix = ''} = this.config;
+        const token = await this.sign(payload, jwtConfig);
+        return prefix + token;
+    }
 
 }
 
