@@ -43,6 +43,13 @@ class JWTR {
         return token;
     }
 
+    // Retrieves payload for token
+    public async getToken(token) {
+        const {prefix = ''} = this.config;
+        const key = prefix + token;
+        return this.redis.get(key);
+    }
+
 }
 
 export default JWTR;
