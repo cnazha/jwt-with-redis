@@ -1,4 +1,4 @@
 export interface IConfig {
-    prefix?: string
-    secret: string
+  prefix?: string;
+  secret: string;
 }
