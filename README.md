@@ -1,4 +1,5 @@
-# jwt-with-redis
+## Status: Alpha Stage
+
 
 ## Usage
 
@@ -27,9 +28,6 @@ const payload = { name: "Christian" };
 })();
 ```
 
-## Status
-
-The Library is still in BETA phase.
 
 ## Contributing
 
