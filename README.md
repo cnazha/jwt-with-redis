@@ -14,14 +14,14 @@ const payload = { name: "Christian" };
   // Adds token to redis and returns it
   const token = await jwr.addToken(payload);
 
-  // Check token - retreives it from redis
-  const data = await jwr.getToken(token);
+  // Check token - retrieves it from redis
+  await jwr.getToken(token); // { name: "Christian" }  same as payload
 
   // Delete token
   await jwr.revokeToken(token); // 1
 
   // Check revoked token
-  const invalidTokenData = await jwr.getToken(token); // null
+  await jwr.getToken(token); // null
 
 
 })();
