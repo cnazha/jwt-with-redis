@@ -15,7 +15,7 @@ export default class JWT {
     }
 
     // Create object if payload is a string to support expiry
-    protected handlePayload(payload) {
+    public handlePayload(payload) {
         // Is an object and not array
         const isObject = typeof payload === "object" &&
             payload !== null &&
