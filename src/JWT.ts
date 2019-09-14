@@ -48,14 +48,14 @@ export default class JWT {
   }
 
   // JWT decode method
-  public decode(token: string): Promise<string> {
-    const payload = this.jwt.decode(token, this.SECRET);
+  public async decode(token: string): Promise<any> {
+    const payload = await this.jwt.decode(token, this.SECRET);
     return this.revertPayload(payload);
   }
 
   // JWT verify method
-  public verify(token: string): Promise<string> {
-    const payload = this.jwt.verify(token, this.SECRET);
+  public async verify(token: string): Promise<any> {
+    const payload = await this.jwt.verify(token, this.SECRET);
     return this.revertPayload(payload);
   }
 }
