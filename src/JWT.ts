@@ -23,7 +23,7 @@ export default class JWT {
   }
 
   // Create object if payload is a string to support expiry
-  public handlePayload(payload) {
+  public static handlePayload(payload) {
     // Is an object and not array
     const isObject =
       typeof payload === "object" &&
@@ -40,7 +40,7 @@ export default class JWT {
     };
   }
 
-  public revertPayload(payload) {
+  public static revertPayload(payload) {
     if (payload.jwr_objectified) return payload.data;
     return payload;
   }
@@ -51,19 +51,19 @@ export default class JWT {
       ...this.defaultJWTConfig,
       ...jwtConfig
     };
-    const payload = this.handlePayload(rawPayload);
+    const payload = JWT.handlePayload(rawPayload);
     return this.jwt.sign(payload, this.SECRET, options);
   }
 
   // JWT decode method
   public async decode(token: string): Promise<any> {
     const payload = await this.jwt.decode(token, this.SECRET);
-    return this.revertPayload(payload);
+    return JWT.revertPayload(payload);
   }
 
   // JWT verify method
   public async verify(token: string): Promise<any> {
     const payload = await this.jwt.verify(token, this.SECRET);
-    return this.revertPayload(payload);
+    return JWT.revertPayload(payload);
   }
 }

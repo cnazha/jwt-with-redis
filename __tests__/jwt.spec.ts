@@ -6,7 +6,7 @@ describe("JWT Native suite", () => {
     describe("JWT Payload", () => {
         it('should transform empty payload to object', function () {
             const data = '';
-            const payload = jwr.handlePayload(data);
+            const payload = JWT.handlePayload(data);
             expect(payload).toBeDefined();
             expect(typeof payload).toBe("object");
             expect(payload.jwr_objectified).toBeTruthy();
@@ -14,7 +14,7 @@ describe("JWT Native suite", () => {
         });
         it('should transform null payload to object', function () {
             const data = null;
-            const payload = jwr.handlePayload(data);
+            const payload = JWT.handlePayload(data);
             expect(payload).toBeDefined();
             expect(typeof payload).toBe("object");
             expect(payload.jwr_objectified).toBeTruthy();
@@ -22,7 +22,7 @@ describe("JWT Native suite", () => {
         });
         it('should transform array payload to object', function () {
             const data = [1, 2, 3, 4];
-            const payload = jwr.handlePayload(data);
+            const payload = JWT.handlePayload(data);
             expect(payload).toBeDefined();
             expect(typeof payload).toBe("object");
             expect(payload.jwr_objectified).toBeTruthy();
@@ -30,7 +30,7 @@ describe("JWT Native suite", () => {
         });
         it('should keep payload as is for object', function () {
             const data = {name: "Christian"};
-            const payload = jwr.handlePayload(data);
+            const payload = JWT.handlePayload(data);
             expect(payload).toBeDefined();
             expect(typeof payload).toBe("object");
             expect(payload.jwr_objectified).toBeUndefined();
