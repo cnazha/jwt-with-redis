@@ -9,10 +9,17 @@ export default class JWT {
 
   constructor(config: IConfig) {
     this.config = config;
-    this.SECRET = config.env_key ? process.env[config.env_key] : config.secret;
+    this.SECRET = this.setSecret();
     this.jwt = jwt;
     this.defaultJWTConfig = { expiresIn: 60 * 60 * 24 };
     console.log(this.SECRET);
+  }
+
+  private setSecret() {
+    const {config} = this;
+    return config.env_key
+      ? process.env[config.env_key]
+      : config.secret;
   }
 
   // Create object if payload is a string to support expiry
@@ -60,4 +67,3 @@ export default class JWT {
     return this.revertPayload(payload);
   }
 }
-
