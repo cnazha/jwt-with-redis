@@ -1,10 +1,10 @@
 import * as jwt from "jsonwebtoken";
-import { IConfig } from "./interface";
+import { IConfig, ISignOptions } from "./interface";
 
 export default class JWT {
   private readonly jwt: any;
   protected readonly config: IConfig;
-  protected readonly defaultJWTConfig: any;
+  protected readonly defaultJWTConfig: ISignOptions;
   protected readonly SECRET: string;
 
   constructor(config: IConfig) {
